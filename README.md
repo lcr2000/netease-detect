@@ -18,7 +18,7 @@ import (
 )
 
 func main() {
-	client := netease_detect.NewClient("1", "2", "3")
+	client := netease_detect.NewClient("secretId", "secretKey", "businessId")
 	rsp, err := client.ImageDetect(&model.ImageDetectReq{
 		Images: []*model.ImageInfo{{
 			Name:      "123456789",

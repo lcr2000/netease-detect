@@ -25,14 +25,14 @@ func NewClient(secretId, secretKey string, businessId ...string) *Client {
 	if secretId == "" || secretKey == "" {
 		panic("secretId and secretKey is required")
 	}
-	var tmpBusinessId string
+	var bid string
 	if len(businessId) > 0 {
-		tmpBusinessId = businessId[0]
+		bid = businessId[0]
 	}
 	return &Client{
 		secretId:   secretId,
 		secretKey:  secretKey,
-		businessId: tmpBusinessId,
+		businessId: bid,
 	}
 }
 
@@ -47,7 +47,7 @@ func (c *Client) Request(apiUrl, version string, params url.Values) (resp []byte
 	params["nonce"] = []string{strconv.FormatInt(rand.New(rand.NewSource(time.Now().UnixNano())).Int63n(10000000000), 10)}
 	params["signature"] = []string{GenSignature(params, c.secretKey)}
 	resp, err = goutils.HttpPost(apiUrl, goutils.HttpContentTypeForm, params.Encode())
-	log.Printf("Request apiUrl= %s, req= %v, resp= %v", apiUrl, params, resp)
+	log.Printf("Request apiUrl= %s, req= %v, resp= %s", apiUrl, params, string(resp))
 	if err != nil {
 		return
 	}

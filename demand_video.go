@@ -9,7 +9,7 @@ import (
 )
 
 /*
-	视频点播文档地址
+	点播视频文档地址
 	https://support.dun.163.com/documents/2018041903?docId=150440843651764224
 */
 
