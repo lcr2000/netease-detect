@@ -1,0 +1,166 @@
+package netease_detect
+
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+	"github.com/lcr2000/goutils"
+	"github.com/lcr2000/netease-detect/model"
+	"net/url"
+)
+
+/*
+  音频检测文档地址
+  https://support.dun.163.com/documents/588434426518708224?docId=600817227615772672
+*/
+
+// LiveAudioDetectSubmit 直播音频提交检测
+func (c *Client) LiveAudioDetectSubmit(req *model.LiveAudioDetectSubmitReq) (rsp *model.LiveAudioDetectSubmitResp, err error) {
+	if req == nil || req.Url == "" || req.DataId == "" {
+		err = errors.New("params is required")
+		return
+	}
+
+	params := url.Values{
+		"url":    []string{req.Url},
+		"dataId": []string{req.DataId},
+	}
+	if req.Title != "" {
+		params["title"] = []string{req.Title}
+	}
+	if req.Ip != "" {
+		params["ip"] = []string{req.Ip}
+	}
+	if req.Account != "" {
+		params["account"] = []string{req.Account}
+	}
+	if req.RoomNo != "" {
+		params["roomNo"] = []string{req.RoomNo}
+	}
+	if req.AccountLevel != "" {
+		params["accountLevel"] = []string{req.AccountLevel}
+	}
+	if req.AccountName != "" {
+		params["accountName"] = []string{req.AccountName}
+	}
+	if req.DeviceId != "" {
+		params["deviceId"] = []string{req.DeviceId}
+	}
+	if req.DeviceType != 0 {
+		params["deviceType"] = []string{fmt.Sprintf("%d", req.DeviceType)}
+	}
+	if req.Callback != "" {
+		params["callback"] = []string{req.Callback}
+	}
+	if req.CallbackUrl != "" {
+		params["callbackUrl"] = []string{req.CallbackUrl}
+	}
+	if req.UniqueKey != "" {
+		params["uniqueKey"] = []string{req.UniqueKey}
+	}
+	if req.CheckLanguageCode != "" {
+		params["checkLanguageCode"] = []string{req.CheckLanguageCode}
+	}
+
+	bytes, err := c.Request(LiveAudioDetectSubmitUrl, ApiVersionV4, params)
+	if err != nil {
+		return
+	}
+
+	rsp = &model.LiveAudioDetectSubmitResp{}
+	if err = json.Unmarshal(bytes, &rsp); err != nil {
+		return
+	}
+	if rsp.Code != CallSuccessCode {
+		err = fmt.Errorf("LiveAudioDetectSubmit fail, code=%v", rsp.Code)
+		return
+	}
+
+	return
+}
+
+// GetLiveAudioDetectResult 获取直播音频检测结果
+func (c *Client) GetLiveAudioDetectResult() (rsp *model.LiveAudioDetectResultResp, err error) {
+	params := url.Values{}
+	body, err := c.Request(LiveAudioDetectResultUrl, ApiVersionV4, params)
+	if err != nil {
+		return
+	}
+	rsp = &model.LiveAudioDetectResultResp{}
+	if err = json.Unmarshal(body, &rsp); err != nil {
+		return
+	}
+	if rsp.Code != CallSuccessCode {
+		err = fmt.Errorf("GetLiveAudioDetectResult fail, code=%v", rsp.Code)
+		return
+	}
+	return
+}
+
+// LiveAudioDetectStop 停止直播音频检测
+func (c *Client) LiveAudioDetectStop(taskIds []string) (rsp *model.LiveAudioDetectStopResp, err error) {
+	if len(taskIds) == 0 {
+		err = errors.New("params is required")
+		return
+	}
+	if len(taskIds) > 100 {
+		err = errors.New("submit up to 100")
+		return
+	}
+
+	// 直播信息更新数据(Json数组),提交时转换为string格式，数组最多100个
+	feedback := make([]*model.LiveAudioDetectFeedback, 0, len(taskIds))
+	for _, taskId := range taskIds {
+		feedback = append(feedback, &model.LiveAudioDetectFeedback{
+			TaskId: taskId,
+			Status: StopDetectStatus,
+		})
+	}
+	params := url.Values{
+		"feedbacks": []string{goutils.JsonMarshalNoError(feedback)},
+	}
+
+	bytes, err := c.Request(LiveAudioDetectStopUrl, ApiVersionV1, params)
+	if err != nil {
+		return
+	}
+
+	rsp = &model.LiveAudioDetectStopResp{}
+	if err = json.Unmarshal(bytes, &rsp); err != nil {
+		return
+	}
+	if rsp.Code != CallSuccessCode {
+		err = fmt.Errorf("LiveAudioDetectStop fail, code=%v", rsp.Code)
+		return
+	}
+
+	return
+}
+
+// LiveAudioDetectFeedback 直播音频检测反馈
+func (c *Client) LiveAudioDetectFeedback(req *model.FeedbackReq) (rsp *model.LiveAudioDetectFeedbackResp, err error) {
+	if req == nil || req.Level < 0 || req.TaskId == "" {
+		err = errors.New("params is required")
+		return
+	}
+
+	params := url.Values{
+		"feedbacks": []string{goutils.JsonMarshalNoError(req)},
+	}
+
+	bytes, err := c.Request(LiveAudioDetectFeedbackUrl, ApiVersionV1, params)
+	if err != nil {
+		return
+	}
+
+	rsp = &model.LiveAudioDetectFeedbackResp{}
+	if err = json.Unmarshal(bytes, &rsp); err != nil {
+		return
+	}
+	if rsp.Code != CallSuccessCode {
+		err = fmt.Errorf("LiveAudioDetectFeedback fail, code=%v", rsp.Code)
+		return
+	}
+
+	return
+}
