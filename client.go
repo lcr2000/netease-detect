@@ -40,9 +40,9 @@ func NewClient(secretID, secretKey string, businessID ...string) *Client {
 // Request 通用的请求
 func (c *Client) Request(apiURL, version string, params url.Values) (resp []byte, err error) {
 	if c.businessID != "" {
-		params["businessID"] = []string{c.businessID}
+		params["businessId"] = []string{c.businessID}
 	}
-	params["secretID"] = []string{c.secretID}
+	params["secretId"] = []string{c.secretID}
 	params["version"] = []string{version}
 	params["timestamp"] = []string{strconv.FormatInt(time.Now().UnixNano()/1000000, 10)}
 	params["nonce"] = []string{strconv.FormatInt(rand.New(rand.NewSource(time.Now().UnixNano())).Int63n(10000000000), 10)}
