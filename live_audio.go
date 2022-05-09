@@ -17,20 +17,20 @@ import (
 
 // LiveAudioDetectSubmit 直播音频提交检测
 func (c *Client) LiveAudioDetectSubmit(req *model.LiveAudioDetectSubmitReq) (rsp *model.LiveAudioDetectSubmitResp, err error) {
-	if req == nil || req.Url == "" || req.DataId == "" {
+	if req == nil || req.URL == "" || req.DataID == "" {
 		err = errors.New("params is required")
 		return
 	}
 
 	params := url.Values{
-		"url":    []string{req.Url},
-		"dataId": []string{req.DataId},
+		"url":    []string{req.URL},
+		"dataId": []string{req.DataID},
 	}
 	if req.Title != "" {
 		params["title"] = []string{req.Title}
 	}
-	if req.Ip != "" {
-		params["ip"] = []string{req.Ip}
+	if req.IP != "" {
+		params["ip"] = []string{req.IP}
 	}
 	if req.Account != "" {
 		params["account"] = []string{req.Account}
@@ -44,8 +44,8 @@ func (c *Client) LiveAudioDetectSubmit(req *model.LiveAudioDetectSubmitReq) (rsp
 	if req.AccountName != "" {
 		params["accountName"] = []string{req.AccountName}
 	}
-	if req.DeviceId != "" {
-		params["deviceId"] = []string{req.DeviceId}
+	if req.DeviceID != "" {
+		params["deviceId"] = []string{req.DeviceID}
 	}
 	if req.DeviceType != 0 {
 		params["deviceType"] = []string{fmt.Sprintf("%d", req.DeviceType)}
@@ -53,8 +53,8 @@ func (c *Client) LiveAudioDetectSubmit(req *model.LiveAudioDetectSubmitReq) (rsp
 	if req.Callback != "" {
 		params["callback"] = []string{req.Callback}
 	}
-	if req.CallbackUrl != "" {
-		params["callbackUrl"] = []string{req.CallbackUrl}
+	if req.CallbackURL != "" {
+		params["callbackUrl"] = []string{req.CallbackURL}
 	}
 	if req.UniqueKey != "" {
 		params["uniqueKey"] = []string{req.UniqueKey}
@@ -113,7 +113,7 @@ func (c *Client) LiveAudioDetectStop(taskIds []string) (rsp *model.LiveAudioDete
 	feedback := make([]*model.LiveAudioDetectFeedback, 0, len(taskIds))
 	for _, taskID := range taskIds {
 		feedback = append(feedback, &model.LiveAudioDetectFeedback{
-			TaskId: taskID,
+			TaskID: taskID,
 			Status: StopDetectStatus,
 		})
 	}
@@ -140,7 +140,7 @@ func (c *Client) LiveAudioDetectStop(taskIds []string) (rsp *model.LiveAudioDete
 
 // LiveAudioDetectFeedback 直播音频检测反馈
 func (c *Client) LiveAudioDetectFeedback(req *model.FeedbackReq) (rsp *model.LiveAudioDetectFeedbackResp, err error) {
-	if req == nil || req.Level < 0 || req.TaskId == "" {
+	if req == nil || req.Level < 0 || req.TaskID == "" {
 		err = errors.New("params is required")
 		return
 	}

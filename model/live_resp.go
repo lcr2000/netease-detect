@@ -49,11 +49,11 @@ type LiveDetectAudio struct {
 	StartTime    int64                   `json:"startTime" bson:"startTime"`       // 是	断句开始时间，单位毫秒
 	EndTime      int64                   `json:"endTime" bson:"endTime"`           // 是 断句结束时间，单位毫秒
 	Content      string                  `json:"content" bson:"content"`           // 是	检测命中内容返回
-	Url          string                  `json:"url" bson:"url"`                   // 否 需要开启返回直播语音片段播放地址，请联系易盾策略经理
-	SpeakerId    string                  `json:"speakerId" bson:"speakerId"`       // 否	针对接入SDK监听客户，返回说话人ID信息
+	URL          string                  `json:"url" bson:"url"`                   // 否 需要开启返回直播语音片段播放地址，请联系易盾策略经理
+	SpeakerID    string                  `json:"speakerId" bson:"speakerId"`       // 否	针对接入SDK监听客户，返回说话人ID信息
 	FrontSegment *FrontAudioSegment      `json:"frontSegment" bson:"frontSegment"` // 否 关联证据信息，异常/嫌疑断句命中时返回，命中断句前20s的证据信息，包含前20s的音频语音识别内容及对应url，通过时数据为空
 	Labels       []*LiveDetectAudioLabel `json:"labels" bson:"labels"`             // 否 分类信息，通过时数据为空
-	SegmentId    string                  `json:"segmentId" bson:"segmentId"`       // 是	断句id
+	SegmentID    string                  `json:"segmentId" bson:"segmentId"`       // 是	断句id
 }
 
 type LiveDetectVideo struct {
@@ -67,7 +67,7 @@ type LiveDetectEvidenceDetail struct {
 	URL        string                `json:"url" bson:"url"`               // 是 证据信息内容
 	BeginTime  int64                 `json:"beginTime" bson:"beginTime"`   // 是 直播当前时间点，单位为毫秒
 	EndTime    int64                 `json:"endTime" bson:"endTime"`       // 是 直播当前时间点，单位为毫秒
-	SpeakerId  string                `json:"speakerId" bson:"speakerId"`   // 否 针对接入SDK监听客户，返回说话人ID信息
+	SpeakerID  string                `json:"speakerId" bson:"speakerId"`   // 否 针对接入SDK监听客户，返回说话人ID信息
 	FrontPics  []*LiveDetectFrontPic `json:"frontPics" bson:"frontPics"`   // 是 关联信息-命中前截图信息
 }
 
@@ -112,6 +112,6 @@ type LiveDetectHitInfo struct {
 }
 
 type FrontAudioSegment struct {
-	Url     string `json:"url" bson:"url"`         // 是 音频断句url
+	URL     string `json:"url" bson:"url"`         // 是 音频断句url
 	Content string `json:"content" bson:"content"` // 是 音频断句语音识别结果
 }

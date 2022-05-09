@@ -48,7 +48,7 @@ type AntiImageDetails struct {
 	} `json:"imageTagInfos"`
 	ImageListInfos []struct {
 		Type     string `json:"type"`
-		Url      string `json:"url"`
+		URL      string `json:"url"`
 		HitCount string `json:"hitCount"`
 		Word     string `json:"word"`
 	} `json:"imageListInfos"`
@@ -151,7 +151,7 @@ type Scene struct {
 
 type ImageHitInfo struct {
 	Labels    map[int]*ImageHitLabelInfo `json:"labels"`
-	TaskId    string                     `json:"task_id"`
+	TaskID    string                     `json:"task_id"`
 	ImageName string                     `json:"image_name"`
 	Data      string                     `json:"data"`   // 图片url
 	Action    int                        `json:"action"` // 图片url

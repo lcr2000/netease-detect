@@ -16,14 +16,14 @@ import (
 
 // VideoDetectSubmit 提交点播视频异步检测
 func (c *Client) VideoDetectSubmit(req *model.VideoDetectSubmitReq) (rsp *model.VideoCheckSubmitResp, err error) {
-	if req == nil || req.Url == "" || req.DataId == "" {
+	if req == nil || req.URL == "" || req.DataID == "" {
 		err = errors.New("params is required")
 		return
 	}
 
 	params := url.Values{
-		"url":     []string{req.Url},
-		"dataId":  []string{req.DataId},
+		"url":     []string{req.URL},
+		"dataId":  []string{req.DataID},
 		"version": []string{"v3.2"},
 	}
 	if req.Title != "" {
@@ -32,8 +32,8 @@ func (c *Client) VideoDetectSubmit(req *model.VideoDetectSubmitReq) (rsp *model.
 	if req.Callback != "" {
 		params["callback"] = []string{req.Callback}
 	}
-	if req.CallbackUrl != "" {
-		params["callbackUrl"] = []string{req.CallbackUrl}
+	if req.CallbackURL != "" {
+		params["callbackUrl"] = []string{req.CallbackURL}
 	}
 	if req.UniqueKey != "" {
 		params["uniqueKey"] = []string{req.UniqueKey}

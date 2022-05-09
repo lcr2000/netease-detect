@@ -35,7 +35,7 @@ type UserExtension struct {
 // DeviceExtension 设备扩展参数
 // 根据设备信息输出设备画像，并与易盾自有设备画像库比对，辅助反垃圾结果判定
 type DeviceExtension struct {
-	DeviceId   string `json:"deviceId"`   // N	128	用户设备 id，与易盾设备画像库匹配，明文请转大写传入；MD5加密请明文转大写后MD5计算，再转大写传入，建议抄送
+	DeviceID   string `json:"deviceId"`   // N	128	用户设备 id，与易盾设备画像库匹配，明文请转大写传入；MD5加密请明文转大写后MD5计算，再转大写传入，建议抄送
 	DeviceType int    `json:"deviceType"` // N	4	用户设备id的类型，0:其他，10:IMEI，11:AndroidID，12:IDFA，13:IDFV，14:MAC ，20:IMEI_MD5，21:AndroidID_MD5，22:IDFA_MD5，23:IDFV_MD5，24:MAC_MD5
 	Mac        string `json:"mac"`        // N	128	用户设备 id，与易盾设备画像库匹配，明文请转大写传入；MD5加密请明文转大写后MD5计算，再转大写传入，建议抄送 N	64	用户设备mac信息,与易盾设备画像库匹配，建议抄送
 	Imei       string `json:"imei"`       // N	128	用户设备 id，与易盾设备画像库匹配，明文请转大写传入；MD5加密请明文转大写后MD5计算，再转大写传入，建议抄送 N	64	国际移动设备识别码，与易盾设备画像库匹配，建议抄送
@@ -47,18 +47,18 @@ type DeviceExtension struct {
 // SceneExtension 场景扩展参数
 // 场景扩展参数，有助于通过业务场景维度辅助反垃圾结果判定
 type SceneExtension struct {
-	ReceiveUid   string `json:"receiveUid"`   // N	64	接受消息的用户标识，私聊/评论回复场景使用，易盾可根据该id关联检测，辅助机审策略精准调优
+	ReceiveUID   string `json:"receiveUid"`   // N	64	接受消息的用户标识，私聊/评论回复场景使用，易盾可根据该id关联检测，辅助机审策略精准调优
 	Relationship int    `json:"relationship"` // N	11	收发消息者好友关系，1接收人关注发送人，2发送人关注接收人，3互相关注，4互未关注，私聊/评论场景抄送
-	GroupId      string `json:"groupId"`      // N	32	群聊id，群聊场景使用，建议抄送，辅助机审策略精准调优
-	RoomId       string `json:"roomId"`       // N	32	聊天室/直播/游戏房间，派对房/直播场景使用，可根据不同的房间设置不同策略，建议抄送，辅助机审策略精准调优
+	GroupID      string `json:"groupId"`      // N	32	群聊id，群聊场景使用，建议抄送，辅助机审策略精准调优
+	RoomID       string `json:"roomId"`       // N	32	聊天室/直播/游戏房间，派对房/直播场景使用，可根据不同的房间设置不同策略，建议抄送，辅助机审策略精准调优
 	Topic        string `json:"topic"`        // N	128	文章/帖子id，发帖/动态场景使用，易盾可根据该id，关联检测，辅助机审策略精准调优
-	CommentId    string `json:"commentId"`    // N	32	主评论id，围绕主评论盖楼场景使用，建议抄送，辅助机审策略精准调优
-	CommodityId  string `json:"commodityId"`  // N	32	商品id，直播卖货/商品介绍场景使用，可根据商品类型设置策略，建议抄送，辅助机审策略精准调优
+	CommentID    string `json:"commentId"`    // N	32	主评论id，围绕主评论盖楼场景使用，建议抄送，辅助机审策略精准调优
+	CommodityID  string `json:"commodityId"`  // N	32	商品id，直播卖货/商品介绍场景使用，可根据商品类型设置策略，建议抄送，辅助机审策略精准调优
 }
 
 // OtherExtension 其他拓展参数
 type OtherExtension struct {
-	Ip          string `json:"ip"`          // 否	128	用户IP地址，建议抄送，辅助机审策略精准调优
+	IP          string `json:"ip"`          // 否	128	用户IP地址，建议抄送，辅助机审策略精准调优
 	RelatedKeys string `json:"relatedKeys"` // 否	512	String数组，多个关联Key以逗号分隔（"xxx,xxx"），最多三个Key，单个Key长度不超过128，适用于私聊/评论/跟帖等情况同一用户或不同用户发送多条违规内容关联检测的场景。如需要检测同一评论下的同一用户或不同用户发送违规内容盖楼场景，Key传值方式可以为（"评论ID,用户ID"）
 	ExtStr1     string `json:"extStr1"`     // 否	128	自定义扩展参数
 	ExtStr2     string `json:"extStr2"`     // 否	128	自定义扩展参数
@@ -111,8 +111,8 @@ func SplicingBusinessExpansion(businessExtension *BusinessExtension, params url.
 
 	deviceExtension := businessExtension.DeviceExtension
 	if deviceExtension != nil {
-		if deviceExtension.DeviceId != "" {
-			params["deviceId"] = []string{deviceExtension.DeviceId}
+		if deviceExtension.DeviceID != "" {
+			params["deviceId"] = []string{deviceExtension.DeviceID}
 		}
 		if deviceExtension.DeviceType > 0 {
 			params["deviceType"] = []string{fmt.Sprintf("%d", deviceExtension.DeviceType)}
@@ -136,33 +136,33 @@ func SplicingBusinessExpansion(businessExtension *BusinessExtension, params url.
 
 	sceneExtension := businessExtension.SceneExtension
 	if sceneExtension != nil {
-		if sceneExtension.ReceiveUid != "" {
-			params["receiveUid"] = []string{sceneExtension.ReceiveUid}
+		if sceneExtension.ReceiveUID != "" {
+			params["receiveUid"] = []string{sceneExtension.ReceiveUID}
 		}
 		if sceneExtension.Relationship > 0 {
 			params["relationship"] = []string{fmt.Sprintf("%d", sceneExtension.Relationship)}
 		}
-		if sceneExtension.GroupId != "" {
-			params["groupId"] = []string{sceneExtension.GroupId}
+		if sceneExtension.GroupID != "" {
+			params["groupId"] = []string{sceneExtension.GroupID}
 		}
-		if sceneExtension.RoomId != "" {
-			params["roomId"] = []string{sceneExtension.RoomId}
+		if sceneExtension.RoomID != "" {
+			params["roomId"] = []string{sceneExtension.RoomID}
 		}
 		if sceneExtension.Topic != "" {
 			params["topic"] = []string{sceneExtension.Topic}
 		}
-		if sceneExtension.CommentId != "" {
-			params["commentId"] = []string{sceneExtension.CommentId}
+		if sceneExtension.CommentID != "" {
+			params["commentId"] = []string{sceneExtension.CommentID}
 		}
-		if sceneExtension.CommodityId != "" {
-			params["commodityId"] = []string{sceneExtension.CommodityId}
+		if sceneExtension.CommodityID != "" {
+			params["commodityId"] = []string{sceneExtension.CommodityID}
 		}
 	}
 
 	otherExtension := businessExtension.OtherExtension
 	if otherExtension != nil {
-		if otherExtension.Ip != "" {
-			params["ip"] = []string{otherExtension.Ip}
+		if otherExtension.IP != "" {
+			params["ip"] = []string{otherExtension.IP}
 		}
 		if otherExtension.RelatedKeys != "" {
 			params["relatedKeys"] = []string{otherExtension.RelatedKeys}

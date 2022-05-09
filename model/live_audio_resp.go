@@ -50,9 +50,9 @@ type LiveAudioDetectEvidence struct {
 	StartTime    int                `json:"startTime" bson:"startTime"`       // 是	断句开始时间，单位毫秒
 	EndTime      int                `json:"endTime" bson:"endTime"`           // 是 断句结束时间，单位毫秒
 	Content      string             `json:"content" bson:"content"`           // 是	检测命中内容返回
-	Url          string             `json:"url" bson:"url"`                   // 否 需要开启返回直播语音片段播放地址，请联系易盾策略经理
-	SpeakerId    string             `json:"speakerId" bson:"speakerId"`       // 否	针对接入SDK监听客户，返回说话人ID信息
-	SegmentId    string             `json:"segmentId" bson:"segmentId"`       // 是 断句id
+	URL          string             `json:"url" bson:"url"`                   // 否 需要开启返回直播语音片段播放地址，请联系易盾策略经理
+	SpeakerID    string             `json:"speakerId" bson:"speakerId"`       // 否	针对接入SDK监听客户，返回说话人ID信息
+	SegmentID    string             `json:"segmentId" bson:"segmentId"`       // 是 断句id
 	FrontSegment *FrontAudioSegment `json:"frontSegment" bson:"frontSegment"` // 否 关联证据信息，异常/嫌疑断句命中时返回，命中断句前20s的证据信息，包含前20s的音频语音识别内容及对应url，通过时数据为空
 	Labels       []*LiveAudioLabel  `json:"labels" bson:"labels"`             // 否 分类信息，通过时数据为空
 }
@@ -91,21 +91,21 @@ type Segment struct {
 
 // Asr 语音识别检测结果
 type Asr struct {
-	TaskId    string `json:"taskId" bson:"taskId"`       // 是	检测任务 ID，示例值："38e08da8d2574df4bd2eca9b5153df72"
+	TaskID    string `json:"taskId" bson:"taskId"`       // 是	检测任务 ID，示例值："38e08da8d2574df4bd2eca9b5153df72"
 	StartTime int    `json:"startTime" bson:"startTime"` // 是	断句开始时间，单位毫秒
 	EndTime   int    `json:"endTime" bson:"endTime"`     // 是	断句结束时间，单位毫秒
 	Content   string `json:"content" bson:"content"`     // 是	语音识别结果
-	SpeakerId string `json:"speakerId" bson:"speakerId"` // 否	针对接入SDK监听客户，返回说话人ID信息
+	SpeakerID string `json:"speakerId" bson:"speakerId"` // 否	针对接入SDK监听客户，返回说话人ID信息
 }
 
 // Language 语种识别检测结果
 type Language struct {
-	TaskId    string `json:"taskId" bson:"taskId"`       // 是	检测任务 ID，示例值："38e08da8d2574df4bd2eca9b5153df72"
+	TaskID    string `json:"taskId" bson:"taskId"`       // 是	检测任务 ID，示例值："38e08da8d2574df4bd2eca9b5153df72"
 	StartTime int    `json:"startTime" bson:"startTime"` // 是	断句开始时间，单位毫秒
 	EndTime   int    `json:"endTime" bson:"endTime"`     // 是	断句结束时间，单位毫秒
 	Content   string `json:"content" bson:"content"`     // 是	语种识别结果
 	Callback  string `json:"callback" bson:"callback"`   // 否	提交时传递的callback
-	SegmentId string `json:"segmentId" bson:"segmentId"` // 是	断句id
+	SegmentID string `json:"segmentId" bson:"segmentId"` // 是	断句id
 }
 
 type LiveAudioDetectFeedbackResp struct {

@@ -7,7 +7,7 @@ type VideoCheckSubmitResp struct {
 }
 
 type VideoCheckSubmitResult struct {
-	TaskId       string `json:"taskId"`
+	TaskID       string `json:"taskId"`
 	Status       int    `json:"status"` // 检测结果，0：成功，1：失败
 	DealingCount int    `json:"dealingCount"`
 }
@@ -19,7 +19,7 @@ type VideoDetectResp struct {
 
 type VideoDetectResult struct {
 	Status       int                         `json:"status"` // 视频处理状态码，定义为：0：检测成功，110：请求重复，120：参数错误，130：解析错误，140：数据类型错误，160：视频大小超限（>5G）
-	TaskId       string                      `json:"taskId"`
+	TaskID       string                      `json:"taskId"`
 	CensorSource int                         `json:"censorSource"`
 	CensorTime   int64                       `json:"censorTime"`
 	Level        int                         `json:"level"`
@@ -31,7 +31,7 @@ type VideoDetectResultEvidence struct {
 	BeginTime int            `json:"beginTime"` // 证据开始相对时间，单位为毫秒 如：149000 转换为"00:02:29"
 	EndTime   int            `json:"endTime"`   // 证据结束相对时间，单位为毫秒
 	Type      int            `json:"type"`      // 1：图片，2：视频
-	Url       string         `json:"url"`
+	URL       string         `json:"url"`
 	Labels    []*VideoLabels `json:"labels"`
 }
 
@@ -55,7 +55,7 @@ type AntiVideoDetails struct {
 	} `json:"imageTagInfo"`
 	ImageListInfo []struct {
 		Type     string `json:"type"`
-		Url      string `json:"url"`
+		URL      string `json:"url"`
 		HitCount string `json:"hitCount"`
 		Word     string `json:"word"`
 	} `json:"imageListInfo"`

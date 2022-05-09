@@ -32,8 +32,8 @@ func (c *Client) ImageDetect(req *model.ImageDetectReq) (rsp *model.ImageDetectR
 		"version": []string{"v4.1"},
 	}
 	// 业务参数
-	if req.Ip != "" {
-		params["ip"] = []string{req.Ip}
+	if req.IP != "" {
+		params["ip"] = []string{req.IP}
 	}
 	if len(req.CheckLabels) > 0 {
 		params["checkLabels"] = req.CheckLabels

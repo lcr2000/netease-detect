@@ -6,7 +6,7 @@ type AudioCheckSubmitResponse struct {
 }
 
 type AudioCheckSubmitResult struct {
-	TaskId       string `json:"taskId"`
+	TaskID       string `json:"taskId"`
 	Status       int    `json:"status"` // 检测结果，0：成功，1：失败
 	DealingCount int    `json:"dealingCount"`
 }
@@ -17,7 +17,7 @@ type AudioDetectResp struct {
 }
 
 type AudioAntiSpam struct {
-	TaskId    string        `json:"taskId"`
+	TaskID    string        `json:"taskId"`
 	AsrStatus int           `json:"asrStatus"`
 	AsrResult int           `json:"asrResult"`
 	Action    int           `json:"action"` // 0：通过，1：嫌疑，2：不通过
@@ -74,7 +74,7 @@ type AudioSyncDetectResp struct {
 type AudioResult struct {
 	Antispam *Antispam      `json:"antispam"`
 	Language *AudioLanguage `json:"language"`
-	Asr      AudioAsr       `json:"asr"`
+	Asr      *AudioAsr      `json:"asr"`
 	Voice    *Voice         `json:"voice"`
 }
 

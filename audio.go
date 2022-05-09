@@ -17,26 +17,26 @@ import (
 
 // AudioDetectSubmit 提交点播音频异步检测
 func (c *Client) AudioDetectSubmit(req *model.AudioDetectSubmitReq) (rsp *model.AudioCheckSubmitResponse, err error) {
-	if req == nil || req.Url == "" {
+	if req == nil || req.URL == "" {
 		err = errors.New("params is required")
 		return
 	}
 
 	params := url.Values{
-		"url":     []string{req.Url},
+		"url":     []string{req.URL},
 		"version": []string{"v3.5"},
 	}
 	if req.Title != "" {
 		params["title"] = []string{req.Title}
 	}
-	if req.Ip != "" {
-		params["ip"] = []string{req.Ip}
+	if req.IP != "" {
+		params["ip"] = []string{req.IP}
 	}
 	if req.Account != "" {
 		params["account"] = []string{req.Account}
 	}
-	if req.DeviceId != "" {
-		params["deviceId"] = []string{req.DeviceId}
+	if req.DeviceID != "" {
+		params["deviceId"] = []string{req.DeviceID}
 	}
 	if req.DeviceType != 0 {
 		params["deviceType"] = []string{fmt.Sprintf("%d", req.DeviceType)}
@@ -44,8 +44,8 @@ func (c *Client) AudioDetectSubmit(req *model.AudioDetectSubmitReq) (rsp *model.
 	if req.Callback != "" {
 		params["callback"] = []string{req.Callback}
 	}
-	if req.CallbackUrl != "" {
-		params["callbackUrl"] = []string{req.CallbackUrl}
+	if req.CallbackURL != "" {
+		params["callbackUrl"] = []string{req.CallbackURL}
 	}
 	if req.SubProduct != "" {
 		params["subProduct"] = []string{req.SubProduct}
@@ -92,7 +92,7 @@ func (c *Client) AudioDetect(req *model.AudioDetectReq) (rsp *model.AudioSyncDet
 		err = errors.New("params is required")
 		return
 	}
-	if req.Url == "" && req.Data == "" {
+	if req.URL == "" && req.Data == "" {
 		err = errors.New("params is required")
 		return
 	}
@@ -105,8 +105,8 @@ func (c *Client) AudioDetect(req *model.AudioDetectReq) (rsp *model.AudioSyncDet
 		"version":       []string{APIVersionV2},
 		"dataCheckType": []string{cast.ToString(req.DataCheckType)},
 	}
-	if req.Url != "" {
-		params["url"] = []string{req.Url}
+	if req.URL != "" {
+		params["url"] = []string{req.URL}
 	}
 	if req.Data != "" {
 		params["data"] = []string{req.Data}
@@ -114,14 +114,14 @@ func (c *Client) AudioDetect(req *model.AudioDetectReq) (rsp *model.AudioSyncDet
 	if req.Title != "" {
 		params["title"] = []string{req.Title}
 	}
-	if req.DataId != "" {
-		params["dataId"] = []string{req.DataId}
+	if req.DataID != "" {
+		params["dataId"] = []string{req.DataID}
 	}
 	if req.Callback != "" {
 		params["callback"] = []string{req.Callback}
 	}
-	if req.CallbackUrl != "" {
-		params["callbackUrl"] = []string{req.CallbackUrl}
+	if req.CallbackURL != "" {
+		params["callbackUrl"] = []string{req.CallbackURL}
 	}
 	if req.PublishTime > 0 {
 		params["publishTime"] = []string{cast.ToString(req.PublishTime)}
@@ -129,14 +129,14 @@ func (c *Client) AudioDetect(req *model.AudioDetectReq) (rsp *model.AudioSyncDet
 	if req.Nickname != "" {
 		params["nickname"] = []string{req.Nickname}
 	}
-	if req.Ip != "" {
-		params["ip"] = []string{req.Ip}
+	if req.IP != "" {
+		params["ip"] = []string{req.IP}
 	}
 	if req.Account != "" {
 		params["account"] = []string{req.Account}
 	}
-	if req.DeviceId != "" {
-		params["deviceId"] = []string{req.DeviceId}
+	if req.DeviceID != "" {
+		params["deviceId"] = []string{req.DeviceID}
 	}
 	if req.DeviceType > 0 {
 		params["deviceType"] = []string{cast.ToString(req.DeviceType)}
