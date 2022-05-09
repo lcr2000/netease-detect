@@ -102,7 +102,7 @@ type Voice struct {
 
 type Antispam struct {
 	TaskID       string        `json:"taskId"`
-	Status       int           `json:"status "`
+	Status       int           `json:"status"`
 	Suggestion   int           `json:"suggestion"`
 	ResultType   int           `json:"resultType"`
 	Segments     []*Segments   `json:"segments"`
