@@ -101,17 +101,19 @@ type Voice struct {
 }
 
 type Antispam struct {
-	TaskID       string        `json:"taskId"`
-	Status       int           `json:"status"`
-	Suggestion   int           `json:"suggestion"`
-	ResultType   int           `json:"resultType"`
-	Segments     []*Segments   `json:"segments"`
-	Callback     string        `json:"callback"`
-	DataID       string        `json:"dataId"`
-	CensorSource int           `json:"censorSource"`
-	Duration     int           `json:"duration"`
-	CensorTime   int64         `json:"censorTime"`
-	CensorLabels []interface{} `json:"censorLabels"`
+	TaskID        string        `json:"taskId"`
+	Status        int           `json:"status"`
+	FailureReason int           `json:"failureReason"`
+	Suggestion    int           `json:"suggestion"`
+	ResultType    int           `json:"resultType"`
+	Segments      []*Segments   `json:"segments"`
+	Callback      string        `json:"callback"`
+	DataID        string        `json:"dataId"`
+	CensorSource  int           `json:"censorSource"`
+	Duration      int           `json:"duration"`
+	CensorTime    int64         `json:"censorTime"`
+	CustomAction  int           `json:"customAction"`
+	CensorLabels  []interface{} `json:"censorLabels"`
 }
 
 type Segments struct {
