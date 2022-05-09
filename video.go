@@ -1,20 +1,21 @@
-package netease_detect
+package netease
 
 import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/lcr2000/netease-detect/model"
 	"net/url"
+
+	"github.com/lcr2000/netease-detect/model"
 )
 
 /*
-	点播视频文档地址
+	点播视频检测文档地址
 	https://support.dun.163.com/documents/2018041903?docId=150440843651764224
 */
 
-// DemandVideoDetectSubmit 点播视频提交检测
-func (c *Client) DemandVideoDetectSubmit(req *model.DemandVideoDetectSubmitReq) (rsp *model.VideoCheckSubmitResp, err error) {
+// VideoDetectSubmit 提交点播视频异步检测
+func (c *Client) VideoDetectSubmit(req *model.VideoDetectSubmitReq) (rsp *model.VideoCheckSubmitResp, err error) {
 	if req == nil || req.Url == "" || req.DataId == "" {
 		err = errors.New("params is required")
 		return
@@ -47,7 +48,7 @@ func (c *Client) DemandVideoDetectSubmit(req *model.DemandVideoDetectSubmitReq) 
 		params["advancedFrequency"] = []string{req.AdvancedFrequency}
 	}
 
-	bytes, err := c.Request(DemandVideoDetectSubmitUrl, "v3.2", params)
+	bytes, err := c.Request(VideoSubmitURL, "v3.2", params)
 	if err != nil {
 		return
 	}
@@ -57,17 +58,17 @@ func (c *Client) DemandVideoDetectSubmit(req *model.DemandVideoDetectSubmitReq) 
 		return
 	}
 	if rsp.Code != CallSuccessCode {
-		err = fmt.Errorf("DemandVideoDetectSubmit fail, code=%v", rsp.Code)
+		err = fmt.Errorf("VideoDetectSubmit fail, code=%v", rsp.Code)
 		return
 	}
 
 	return
 }
 
-// GetDemandVideoDetectResult 获取点播视频检测结果
-func (c *Client) GetDemandVideoDetectResult() (rsp *model.VideoDetectResp, err error) {
+// GetVideoDetectResult 获取点播视频检测结果
+func (c *Client) GetVideoDetectResult() (rsp *model.VideoDetectResp, err error) {
 	params := url.Values{}
-	body, err := c.Request(DemandVideoDetectResultUrl, "v3.1", params)
+	body, err := c.Request(VideoResultURL, "v3.1", params)
 	if err != nil {
 		return
 	}
@@ -76,7 +77,7 @@ func (c *Client) GetDemandVideoDetectResult() (rsp *model.VideoDetectResp, err e
 		return
 	}
 	if rsp.Code != CallSuccessCode {
-		err = fmt.Errorf("GetDemandVideoDetectResult fail, code=%v", rsp.Code)
+		err = fmt.Errorf("GetVideoDetectResult fail, code=%v", rsp.Code)
 		return
 	}
 	return

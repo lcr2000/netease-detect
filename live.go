@@ -1,12 +1,13 @@
-package netease_detect
+package netease
 
 import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net/url"
+
 	"github.com/lcr2000/goutils"
 	"github.com/lcr2000/netease-detect/model"
-	"net/url"
 )
 
 // LiveDetectSubmit 直播音视频提交检测
@@ -81,7 +82,7 @@ func (c *Client) LiveDetectSubmit(req *model.LiveDetectSubmitReq) (rsp *model.Li
 		params["checkLanguageCode"] = []string{req.CheckLanguageCode}
 	}
 
-	body, err := c.Request(LiveDetectSubmitUrl, ApiVersionV3, params)
+	body, err := c.Request(LiveSubmitURL, APIVersionV3, params)
 	if err != nil {
 		return
 	}
@@ -101,7 +102,7 @@ func (c *Client) LiveDetectSubmit(req *model.LiveDetectSubmitReq) (rsp *model.Li
 // GetLiveDetectResult 获取直播音视频检测结果
 func (c *Client) GetLiveDetectResult() (rsp *model.LiveDetectResultResp, err error) {
 	params := url.Values{}
-	body, err := c.Request(LiveDetectResultUrl, ApiVersionV3, params)
+	body, err := c.Request(LiveResultURL, APIVersionV3, params)
 	if err != nil {
 		return
 	}
@@ -124,9 +125,9 @@ func (c *Client) LiveDetectStop(taskIds []string) (rsp *model.LiveDetectStopResp
 	}
 
 	realTimeInfoList := make([]*model.LiveDetectTaskInfo, 0)
-	for _, taskId := range taskIds {
+	for _, taskID := range taskIds {
 		realTimeInfoList = append(realTimeInfoList, &model.LiveDetectTaskInfo{
-			TaskId: taskId,
+			TaskId: taskID,
 			Status: StopDetectStatus,
 		})
 	}
@@ -134,7 +135,7 @@ func (c *Client) LiveDetectStop(taskIds []string) (rsp *model.LiveDetectStopResp
 		"realTimeInfoList": []string{goutils.JsonMarshalNoError(realTimeInfoList)},
 	}
 
-	bytes, err := c.Request(LiveDetectStopUrl, ApiVersionV1, params)
+	bytes, err := c.Request(LiveStopURL, APIVersionV1, params)
 	if err != nil {
 		return
 	}

@@ -1,12 +1,12 @@
 # netease-detect
-网易易盾 Golang 版本 SDK
+网易易盾检测 Golang 版本 SDK
 
  
  ## 单元测试
- 鉴于安全原因, 不便暴露 secretId/secretKey/businessId 等信息.
+ 鉴于安全原因, 不便暴露 secretID/secretKey/businessID(如果有) 等信息.
  所以在测试命令后提供了如下参数.
  ```go
- go test -v -args -secretId xxx -secretKey xxx -businessId xxx
+ go test -v -args -secretID xxx -secretKey xxx -businessID xxx
  ```
 
 ## 快速开始
@@ -18,7 +18,7 @@ import (
 )
 
 func main() {
-	client := netease_detect.NewClient("secretId", "secretKey", "businessId")
+	client := netease_detect.NewClient("your secretID", "your secretKey", "your businessID. If there is")
 	rsp, err := client.ImageDetect(&model.ImageDetectReq{
 		Images: []*model.ImageInfo{{
 			Name:      "123456789",

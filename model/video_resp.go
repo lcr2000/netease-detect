@@ -68,53 +68,53 @@ type AntiVideoDetails struct {
 	} `json:"hitLocationInfos"`
 }
 
-// DemandVideoCallbackResp 点播视频检测结果回调返回值(跟http调用返回的数据结构不一样)
-type DemandVideoCallbackResp struct {
-	TaskID       string                         `json:"taskId"`
-	Callback     string                         `json:"callback"`
-	Status       int                            `json:"status"`
-	Level        int                            `json:"level"`
-	CensorSource int                            `json:"censorSource"`
-	CensorTime   int64                          `json:"censorTime"`
-	Duration     int                            `json:"duration"`
-	Evidences    []*DemandVideoCallbackEvidence `json:"evidences"`
+// VideoCallbackResp 点播视频检测结果回调返回值(跟http调用返回的数据结构不一样)
+type VideoCallbackResp struct {
+	TaskID       string                   `json:"taskId"`
+	Callback     string                   `json:"callback"`
+	Status       int                      `json:"status"`
+	Level        int                      `json:"level"`
+	CensorSource int                      `json:"censorSource"`
+	CensorTime   int64                    `json:"censorTime"`
+	Duration     int                      `json:"duration"`
+	Evidences    []*VideoCallbackEvidence `json:"evidences"`
 }
 
-type DemandVideoCallbackEvidence struct {
-	Type         int                           `json:"type"`
-	URL          string                        `json:"url"`
-	BeginTime    int                           `json:"beginTime"`
-	EndTime      int                           `json:"endTime"`
-	Labels       []*DemandVideoCallbackLabel   `json:"labels"`
-	CensorSource int                           `json:"censorSource"`
-	BackPics     []*DemandVideoCallbackBackPic `json:"backPics"`
+type VideoCallbackEvidence struct {
+	Type         int                     `json:"type"`
+	URL          string                  `json:"url"`
+	BeginTime    int                     `json:"beginTime"`
+	EndTime      int                     `json:"endTime"`
+	Labels       []*VideoCallbackLabel   `json:"labels"`
+	CensorSource int                     `json:"censorSource"`
+	BackPics     []*VideoCallbackBackPic `json:"backPics"`
 }
 
-type DemandVideoCallbackLabel struct {
-	Label     int                            `json:"label"`
-	Level     int                            `json:"level"`
-	Rate      float64                        `json:"rate"`
-	SubLabels []*DemandVideoCallbackSubLabel `json:"subLabels"`
+type VideoCallbackLabel struct {
+	Label     int                      `json:"label"`
+	Level     int                      `json:"level"`
+	Rate      float64                  `json:"rate"`
+	SubLabels []*VideoCallbackSubLabel `json:"subLabels"`
 }
 
-type DemandVideoCallbackSubLabel struct {
-	SubLabel int                        `json:"subLabel"`
-	Rate     float64                    `json:"rate"`
-	Details  *DemandVideoCallbackDetail `json:"details"`
+type VideoCallbackSubLabel struct {
+	SubLabel int                  `json:"subLabel"`
+	Rate     float64              `json:"rate"`
+	Details  *VideoCallbackDetail `json:"details"`
 }
 
-type DemandVideoCallbackDetail struct {
-	HitInfos         []string                              `json:"hitInfos"`
-	ImageTagInfos    []*DemandVideoCallbackImageTagInfo    `json:"imageTagInfos"`
-	HitLocationInfos []*DemandVideoCallbackHitLocationInfo `json:"hitLocationInfos"`
+type VideoCallbackDetail struct {
+	HitInfos         []string                        `json:"hitInfos"`
+	ImageTagInfos    []*VideoCallbackImageTagInfo    `json:"imageTagInfos"`
+	HitLocationInfos []*VideoCallbackHitLocationInfo `json:"hitLocationInfos"`
 }
 
-type DemandVideoCallbackImageTagInfo struct {
+type VideoCallbackImageTagInfo struct {
 	TagName  string `json:"tagName"`
 	TagGroup string `json:"tagGroup"`
 }
 
-type DemandVideoCallbackHitLocationInfo struct {
+type VideoCallbackHitLocationInfo struct {
 	HitInfo string  `json:"hitInfo"`
 	X1      float64 `json:"x1"`
 	Y1      float64 `json:"y1"`
@@ -122,6 +122,6 @@ type DemandVideoCallbackHitLocationInfo struct {
 	Y2      float64 `json:"y2"`
 }
 
-type DemandVideoCallbackBackPic struct {
+type VideoCallbackBackPic struct {
 	URL string `json:"url"`
 }

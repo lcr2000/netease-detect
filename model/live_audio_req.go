@@ -23,7 +23,7 @@ type LiveAudioDetectFeedback struct {
 	Status int    `json:"status"` // 直播音视频检测状态, 100-停止检测
 }
 
-// 反馈接口请求体
+// FeedbackReq 反馈接口请求体
 type FeedbackReq struct {
 	TaskId string `json:"taskId"` // 是	32	音频taskId，示例值："38e08da8d2574df4bd2eca9b5153df72"
 	Level  int    `json:"level"`  // 是	3	数据级别，0：正常，2：确定

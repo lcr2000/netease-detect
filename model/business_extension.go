@@ -180,6 +180,4 @@ func SplicingBusinessExpansion(businessExtension *BusinessExtension, params url.
 			params["extLon2"] = []string{fmt.Sprintf("%d", otherExtension.ExtLon2)}
 		}
 	}
-
-	return
 }

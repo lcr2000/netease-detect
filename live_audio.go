@@ -1,12 +1,13 @@
-package netease_detect
+package netease
 
 import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net/url"
+
 	"github.com/lcr2000/goutils"
 	"github.com/lcr2000/netease-detect/model"
-	"net/url"
 )
 
 /*
@@ -62,7 +63,7 @@ func (c *Client) LiveAudioDetectSubmit(req *model.LiveAudioDetectSubmitReq) (rsp
 		params["checkLanguageCode"] = []string{req.CheckLanguageCode}
 	}
 
-	bytes, err := c.Request(LiveAudioDetectSubmitUrl, ApiVersionV4, params)
+	bytes, err := c.Request(LiveAudioSubmitURL, APIVersionV4, params)
 	if err != nil {
 		return
 	}
@@ -82,7 +83,7 @@ func (c *Client) LiveAudioDetectSubmit(req *model.LiveAudioDetectSubmitReq) (rsp
 // GetLiveAudioDetectResult 获取直播音频检测结果
 func (c *Client) GetLiveAudioDetectResult() (rsp *model.LiveAudioDetectResultResp, err error) {
 	params := url.Values{}
-	body, err := c.Request(LiveAudioDetectResultUrl, ApiVersionV4, params)
+	body, err := c.Request(LiveAudioResultURL, APIVersionV4, params)
 	if err != nil {
 		return
 	}
@@ -110,9 +111,9 @@ func (c *Client) LiveAudioDetectStop(taskIds []string) (rsp *model.LiveAudioDete
 
 	// 直播信息更新数据(Json数组),提交时转换为string格式，数组最多100个
 	feedback := make([]*model.LiveAudioDetectFeedback, 0, len(taskIds))
-	for _, taskId := range taskIds {
+	for _, taskID := range taskIds {
 		feedback = append(feedback, &model.LiveAudioDetectFeedback{
-			TaskId: taskId,
+			TaskId: taskID,
 			Status: StopDetectStatus,
 		})
 	}
@@ -120,7 +121,7 @@ func (c *Client) LiveAudioDetectStop(taskIds []string) (rsp *model.LiveAudioDete
 		"feedbacks": []string{goutils.JsonMarshalNoError(feedback)},
 	}
 
-	bytes, err := c.Request(LiveAudioDetectStopUrl, ApiVersionV1, params)
+	bytes, err := c.Request(LiveAudioStopURL, APIVersionV1, params)
 	if err != nil {
 		return
 	}
@@ -148,7 +149,7 @@ func (c *Client) LiveAudioDetectFeedback(req *model.FeedbackReq) (rsp *model.Liv
 		"feedbacks": []string{goutils.JsonMarshalNoError(req)},
 	}
 
-	bytes, err := c.Request(LiveAudioDetectFeedbackUrl, ApiVersionV1, params)
+	bytes, err := c.Request(LiveAudioFeedbackURL, APIVersionV1, params)
 	if err != nil {
 		return
 	}

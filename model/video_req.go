@@ -1,6 +1,6 @@
 package model
 
-type DemandVideoDetectSubmitReq struct {
+type VideoDetectSubmitReq struct {
 	Url         string // Y	512	点播视频地址
 	DataId      string // Y	128	点播视频唯一标识
 	Version     string // Y	4	接口版本号，可选值 v3.2

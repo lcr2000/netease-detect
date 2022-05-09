@@ -1,53 +1,54 @@
-package netease_detect
+package netease
 
 import (
 	"crypto/md5"
 	"encoding/hex"
-	"github.com/lcr2000/goutils"
 	"log"
 	"math/rand"
 	"net/url"
 	"sort"
 	"strconv"
 	"time"
+
+	"github.com/lcr2000/goutils"
 )
 
 // Client 实例
 type Client struct {
-	secretId   string // 必填 产品秘钥 id,由易盾内容安全服务分配,产品标识
+	secretID   string // 必填 产品秘钥 id,由易盾内容安全服务分配,产品标识
 	secretKey  string // 必填 key
-	businessId string // 非必填 业务id,由易盾内容安全服务分配,业务标识
+	businessID string // 非必填 业务id,由易盾内容安全服务分配,业务标识
 }
 
 // NewClient 初始化网易易盾客户端实例,一般在程序启动的时候调用进行初始化
-// secretId、secretKey是必填的,传入空值将panic; businessId为可选值
-func NewClient(secretId, secretKey string, businessId ...string) *Client {
-	if secretId == "" || secretKey == "" {
-		panic("secretId and secretKey is required")
+// secretID、secretKey是必填的,传入空值将panic; businessID为可选值
+func NewClient(secretID, secretKey string, businessID ...string) *Client {
+	if secretID == "" || secretKey == "" {
+		panic("secretID and secretKey is required")
 	}
 	var bid string
-	if len(businessId) > 0 {
-		bid = businessId[0]
+	if len(businessID) > 0 {
+		bid = businessID[0]
 	}
 	return &Client{
-		secretId:   secretId,
+		secretID:   secretID,
 		secretKey:  secretKey,
-		businessId: bid,
+		businessID: bid,
 	}
 }
 
 // Request 通用的请求
-func (c *Client) Request(apiUrl, version string, params url.Values) (resp []byte, err error) {
-	if c.businessId != "" {
-		params["businessId"] = []string{c.businessId}
+func (c *Client) Request(apiURL, version string, params url.Values) (resp []byte, err error) {
+	if c.businessID != "" {
+		params["businessID"] = []string{c.businessID}
 	}
-	params["secretId"] = []string{c.secretId}
+	params["secretID"] = []string{c.secretID}
 	params["version"] = []string{version}
 	params["timestamp"] = []string{strconv.FormatInt(time.Now().UnixNano()/1000000, 10)}
 	params["nonce"] = []string{strconv.FormatInt(rand.New(rand.NewSource(time.Now().UnixNano())).Int63n(10000000000), 10)}
 	params["signature"] = []string{GenSignature(params, c.secretKey)}
-	resp, err = goutils.HttpPost(apiUrl, goutils.HttpContentTypeForm, params.Encode())
-	log.Printf("Request apiUrl= %s, req= %v, resp= %s", apiUrl, params, string(resp))
+	resp, err = goutils.HttpPost(apiURL, goutils.HttpContentTypeForm, params.Encode())
+	log.Printf("Request apiURL= %s, req= %v, resp= %s", apiURL, params, string(resp))
 	if err != nil {
 		return
 	}

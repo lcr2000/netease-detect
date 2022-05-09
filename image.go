@@ -1,12 +1,13 @@
-package netease_detect
+package netease
 
 import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net/url"
+
 	"github.com/lcr2000/goutils"
 	"github.com/lcr2000/netease-detect/model"
-	"net/url"
 )
 
 /*
@@ -46,7 +47,7 @@ func (c *Client) ImageDetect(req *model.ImageDetectReq) (rsp *model.ImageDetectR
 	// 业务拓展参数
 	model.SplicingBusinessExpansion(req.BusinessExtension, params)
 
-	bytes, err := c.Request(ImageDetectUrl, "v4.1", params)
+	bytes, err := c.Request(ImageURL, "v4.1", params)
 	if err != nil {
 		return
 	}
